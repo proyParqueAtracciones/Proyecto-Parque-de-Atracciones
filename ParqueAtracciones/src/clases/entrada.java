@@ -6,7 +6,7 @@ public class entrada {
 	private double precio;
 	private String tipo;
 	private int cod_taquillero;
-	private static int cont;
+	private static int cont=1;
 	public entrada(int num_entrada, String fh_emision, double precio, String tipo, int cod_taquillero) {
 		this.num_entrada = cont;
 		this.fh_emision = fh_emision;
