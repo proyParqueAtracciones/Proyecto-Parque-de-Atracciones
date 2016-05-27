@@ -1,5 +1,7 @@
 package bbdd;
 import java.sql.*;
+import java.sql.Date;
+
 import clases.*;
 import java.util.*;
 import java.text.*;
@@ -21,6 +23,7 @@ public class BBDDTaquillero {
 		if(precio==20)
 			tipo="corriente";
 		DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+		
 		
 		/*
 		String cadena="INSERT INTO entrada VALUES('"+en.getNumentrada()+"','"+hourdateFormat+"','"+precio+"','"+tipo+"','"+codigo+"')";
