@@ -52,6 +52,17 @@ public class personal {
 	public String getCategoria() {
 		return categoria;
 	}
+
+	@Override
+	public String toString() {
+		return "[cod_empleado=" + cod_empleado + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni="
+				+ dni + ", telefono=" + telefono + ", nss=" + nss + ", direccion=" + direccion + ", categoria="
+				+ categoria + "]";
+	}
+
+	
+	
+	
 	
 	
 }

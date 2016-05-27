@@ -8,14 +8,16 @@ public class parque {
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 		String nombre="";
-		int codigo=0,opc=0,acc=0;
-		int a=0;
+		int codigo=0,opc=0,acc=0,a=0, telefono=0,nss=0;
 		String apellidos="",direccion="",categoria="",horario="",dni="";
-		int telefono=0, nss=0;
+		
+		Vector <personal> listaTaquilleros;
+		
 		personal pe=null;
 		administrador ad=null;
 		entrada en=null;
 		taquillero ta=null;
+		
 		BaseDatosC mibase=new BaseDatosC("mysql-properties.xml");
 
 		do{
@@ -47,15 +49,15 @@ public class parque {
 					mibase.cerrar();
 					if (acc==1){
 						do{
+							System.out.println("");
+							System.out.println("--------------------------");
 							System.out.println("MENU DE GESTIÓN DEL PARQUE");
 							System.out.println("--------------------------");
-							System.out.println("");
 							System.out.println("Introduce opción:");
 							System.out.println("1.Administrar empleados.");
 							System.out.println("2.Revisar atracciones.");
 							System.out.println("3.Recaudar entradas.");
 							System.out.println("0.SALIR.");
-							System.out.println("--------------------------");
 							opc=sc.nextInt();
 							sc.nextLine();
 							switch(opc){
@@ -99,7 +101,21 @@ public class parque {
 									mibase.abrir();
 									BBDDTaquillero.anadir(ta,mibase.getConexion());
 									mibase.cerrar();
+									System.out.println("Empleado añadido correctamente.");
 									break;
+									
+								case 2:
+									listaTaquilleros=BBDDPersonal.listarTaquilleros(pe,mibase.getConexion());
+									System.out.println("Lista de los empleados que se pueden eliminar: ");
+									for (int i=0;i<listaTaquilleros.size(); i++){
+										System.out.println(listaTaquilleros.get(i).toString());
+									}
+									try{
+										System.out.println("Introduce codigo de empleado: ");
+										
+									}catch(InputMismatchException e){
+										System.err.print(e.getMessage());
+									}
 								}
 							}
 						}while(opc!=0);
