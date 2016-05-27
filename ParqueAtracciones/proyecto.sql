@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-05-2016 a las 11:49:17
+-- Tiempo de generación: 27-05-2016 a las 09:51:41
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `administrador` (
 --
 
 INSERT INTO `administrador` (`cod_empleado`, `id_administrador`) VALUES
-(3, '');
+(3, 'a3');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `atracciones` (
 --
 
 INSERT INTO `atracciones` (`cod_atraccion`, `nom_atraccion`, `fh_revision`, `id_administrador`) VALUES
-(0, '', '0000-00-00', '');
+(1, 'Lanzadera', '2016-05-26', 'a3');
 
 -- --------------------------------------------------------
 
@@ -151,8 +151,13 @@ INSERT INTO `taquillero` (`cod_empleado`, `horario`) VALUES
 -- Filtros para la tabla `administrador`
 --
 ALTER TABLE `administrador`
-  ADD CONSTRAINT `administrador_ibfk_2` FOREIGN KEY (`id_administrador`) REFERENCES `atracciones` (`id_administrador`),
   ADD CONSTRAINT `administrador_ibfk_3` FOREIGN KEY (`cod_empleado`) REFERENCES `personal` (`cod_empleado`);
+
+--
+-- Filtros para la tabla `atracciones`
+--
+ALTER TABLE `atracciones`
+  ADD CONSTRAINT `atracciones_ibfk_1` FOREIGN KEY (`id_administrador`) REFERENCES `administrador` (`id_administrador`);
 
 --
 -- Filtros para la tabla `entrada`
