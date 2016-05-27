@@ -10,12 +10,16 @@ public class parque {
 		String nombre="";
 		int codigo=0,opc=0,acc=0;
 		int a=0;
+		String apellidos="",direccion="",categoria="",horario="",dni="";
+		int telefono=0, nss=0;
 		personal pe=null;
 		administrador ad=null;
 		entrada en=null;
+		taquillero ta=null;
 		BaseDatosC mibase=new BaseDatosC("mysql-properties.xml");
+
 		do{
-			System.out.println("############################################");
+			System.out.println("");
 			System.out.println("Sistema de gestión del parque de atracciones");
 			System.out.println("------################################------");
 			System.out.print("Introduzca nombre de usuario: ");
@@ -57,11 +61,45 @@ public class parque {
 							switch(opc){
 							case 1:
 								opc=0;
-								System.out.println("1.Dar de alta nuevo empelado.");
-								System.out.println("2.Dar de baja empleado.");
+								System.out.println("1.Dar de alta nuevo empelado (taquillero).");
+								System.out.println("2.Dar de baja empleado (taquillero).");
+								opc=sc.nextInt();
+								sc.nextLine();
 								switch(opc){
 								case 1:
-									
+									try{
+										System.out.println("Introduce codigo de empleado: ");
+										codigo=sc.nextInt();
+										sc.nextLine();
+										System.out.println("Introduce nombre de empleado: ");
+										nombre=sc.nextLine();
+										System.out.println("Introduce apellidos: ");
+										apellidos=sc.nextLine();
+										System.out.println("Introduce DNI: ");
+										dni=sc.nextLine();
+										System.out.println("Introduce telefono: ");
+										telefono=sc.nextInt();
+										System.out.println("Introduce num. seguridad social: ");
+										nss=sc.nextInt();
+										sc.nextLine();
+										System.out.println("Introduce dirección: ");
+										direccion=sc.nextLine();
+										categoria="Taquillero";
+										System.out.println("Introduce horario (L,M,X,J,V,S,D) :");
+										horario=sc.nextLine();
+									}
+									catch(InputMismatchException e){
+										System.err.print(e.getMessage());
+									}
+									catch(NoSuchElementException e){
+										System.err.print(e.getMessage());
+									}
+
+									ta= new taquillero(codigo,nombre,apellidos,dni,telefono,nss,direccion,categoria,horario);
+									mibase.abrir();
+									BBDDTaquillero.anadir(ta,mibase.getConexion());
+									mibase.cerrar();
+									break;
 								}
 							}
 						}while(opc!=0);

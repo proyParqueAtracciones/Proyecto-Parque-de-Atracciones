@@ -8,11 +8,10 @@ public class personal {
 	private int nss;
 	private String direccion;
 	private String categoria;
-	protected static int cont;
 	
 	public personal(int cod_empleado, String nombre, String apellidos, String dni, int telefono, int nss,
 			String direccion, String categoria) {
-		this.cod_empleado = cont;
+		this.cod_empleado = cod_empleado;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.dni = dni;
@@ -20,7 +19,6 @@ public class personal {
 		this.nss = nss;
 		this.direccion = direccion;
 		this.categoria = categoria;
-		cont++;
 	}
 
 	public int getCod_empleado() {

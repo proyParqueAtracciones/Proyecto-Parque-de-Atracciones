@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-05-2016 a las 09:51:41
+-- Tiempo de generación: 27-05-2016 a las 11:29:24
 -- Versión del servidor: 5.5.24-log
 -- Versión de PHP: 5.4.3
 
@@ -130,9 +130,8 @@ CREATE TABLE IF NOT EXISTS `revisiones` (
 
 CREATE TABLE IF NOT EXISTS `taquillero` (
   `cod_empleado` int(10) NOT NULL,
-  `horario` varchar(20) NOT NULL,
-  PRIMARY KEY (`cod_empleado`),
-  UNIQUE KEY `horario` (`horario`)
+  `horario` char(1) CHARACTER SET utf8 COLLATE utf8_general_mysql500_ci NOT NULL,
+  PRIMARY KEY (`cod_empleado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -140,8 +139,8 @@ CREATE TABLE IF NOT EXISTS `taquillero` (
 --
 
 INSERT INTO `taquillero` (`cod_empleado`, `horario`) VALUES
-(1, 'L,X,V'),
-(2, 'M,J,S');
+(1, 'L'),
+(2, 'X');
 
 --
 -- Restricciones para tablas volcadas
