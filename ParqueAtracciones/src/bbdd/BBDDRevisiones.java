@@ -1,18 +1,14 @@
 package bbdd;
-
 import java.sql.*;
-import clases.entrada;
-
-public class BBDDAtraccion {
+import clases.revision;;
+public class BBDDRevisiones {
 	private static Statement s;
 	private static Connection c;
 	private static ResultSet reg;
 	
-	/*
-	public static int buscar_atraccion(int codigo, Connection c){
-		
+	
+	
+	public static void realizar_revision(){
 		
 	}
-	*/
 }
-
