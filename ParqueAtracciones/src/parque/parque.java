@@ -12,7 +12,9 @@ public class parque {
 		String apellidos="",direccion="",categoria="",horario="",dni="";
 		
 		Vector <personal> listaTaquilleros;
-		
+		/**
+		 * PROBANDO GITHUB
+		 */
 		personal pe=null;
 		administrador ad=null;
 		entrada en=null;
