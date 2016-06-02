@@ -10,6 +10,7 @@ public class parque {
 		String nombre="";
 		int codigo=0,opc=0,acc=0,a=0, telefono=0,nss=0;
 		String apellidos="",direccion="",categoria="",horario="",dni="";
+		boolean valida=false;
 		
 		Vector <personal> listaTaquilleros;
 		/**
@@ -19,7 +20,7 @@ public class parque {
 		administrador ad=null;
 		entrada en=null;
 		taquillero ta=null;
-		
+
 		BaseDatosC mibase=new BaseDatosC("mysql-properties.xml");
 
 		do{
@@ -89,7 +90,7 @@ public class parque {
 										System.out.println("Introduce dirección: ");
 										direccion=sc.nextLine();
 										categoria="Taquillero";
-										System.out.println("Introduce horario (L,M,X,J,V,S,D) :");
+										System.out.println("Introduce horario (L ó M ó X etc) :");
 										horario=sc.nextLine();
 									}
 									catch(InputMismatchException e){
@@ -105,20 +106,44 @@ public class parque {
 									mibase.cerrar();
 									System.out.println("Empleado añadido correctamente.");
 									break;
-									
+
 								case 2:
+									mibase.abrir();
 									listaTaquilleros=BBDDPersonal.listarTaquilleros(pe,mibase.getConexion());
+									mibase.cerrar();
 									System.out.println("Lista de los empleados que se pueden eliminar: ");
 									for (int i=0;i<listaTaquilleros.size(); i++){
 										System.out.println(listaTaquilleros.get(i).toString());
 									}
 									try{
-										System.out.println("Introduce codigo de empleado: ");
+										System.out.println("");
+										System.out.print("Introduce codigo de empleado: ");
+										codigo=sc.nextInt();
+										sc.nextLine();
+										valida=false;
+										for (int i = 0; i < listaTaquilleros.size(); i++) {
+											if(listaTaquilleros.get(i).getCod_empleado()==codigo){
+												mibase.abrir();
+												BBDDTaquillero.eliminar(codigo, mibase.getConexion());
+												mibase.cerrar();
+												valida=true;
+												break;
+											}	
+										}
 										
+										if (valida=false){
+											System.out.println("El empleado con código nº "+codigo+" ha sido eliminado.");
+											break;
+										}
+										System.out.println("El empleado no existe en la base de datos.");
 									}catch(InputMismatchException e){
 										System.err.print(e.getMessage());
 									}
+									break;
 								}
+							case 2:
+								
+								break;
 							}
 						}while(opc!=0);
 					}

@@ -25,6 +25,20 @@ public class BBDDTaquillero {
 		}
 	}
 	
+	public static void eliminar(int codigo, Connection c){
+		String cadena="DELETE FROM personal WHERE cod_empleado="+codigo+"";
+		String cadena1="DELETE FROM taquillero WHERE cod_empleado="+codigo+"";
+		try{
+			s=c.createStatement();
+			s.executeUpdate(cadena1);
+			s.executeUpdate(cadena);
+			s.close();
+		}
+		catch (SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
 }
 	
 

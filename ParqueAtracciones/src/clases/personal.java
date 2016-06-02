@@ -55,9 +55,8 @@ public class personal {
 
 	@Override
 	public String toString() {
-		return "[cod_empleado=" + cod_empleado + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni="
-				+ dni + ", telefono=" + telefono + ", nss=" + nss + ", direccion=" + direccion + ", categoria="
-				+ categoria + "]";
+		return "[" + cod_empleado + ", " + nombre + ", " + apellidos + ", "
+				+ dni + ", " + telefono + ", " + nss + ", " + direccion + "]";
 	}
 
 	

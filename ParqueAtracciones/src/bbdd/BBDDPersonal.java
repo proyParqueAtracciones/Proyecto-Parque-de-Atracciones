@@ -25,7 +25,7 @@ public class BBDDPersonal {
 	}
 	
 	public static Vector<personal> listarTaquilleros(personal pe, Connection c){
-		String cadena="SELECT * FROM personal WHERE categoria='"+"Taquillero"+"'";
+		String cadena="SELECT * FROM personal WHERE categoria='Taquillero'";
 		Vector<personal> listaTaquilleros=new Vector<personal>();
 		try{
 			s=c.createStatement();
