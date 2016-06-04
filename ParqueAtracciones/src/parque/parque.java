@@ -8,11 +8,12 @@ public class parque {
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 		String nombre="";
-		int codigo=0,opc=0,acc=0,a=0, telefono=0,nss=0;
+		int codigo=0,codigoAt=0,opc=0,acc=0,a=0, telefono=0,nss=0,aux=0,aux1=0;
 		String apellidos="",direccion="",categoria="",horario="",dni="";
 		boolean valida=false;
-		
+
 		Vector <personal> listaTaquilleros;
+		Vector <atraccion> lista;
 		/**
 		 * PROBANDO GITHUB
 		 */
@@ -20,6 +21,7 @@ public class parque {
 		administrador ad=null;
 		entrada en=null;
 		taquillero ta=null;
+		atraccion at=null;
 
 		BaseDatosC mibase=new BaseDatosC("mysql-properties.xml");
 
@@ -45,7 +47,7 @@ public class parque {
 				a=BBDDAdministrador.listar(ad, codigo, mibase.getConexion());
 				mibase.cerrar();
 				if(a==1){
-					System.out.println("Introduce tu id de administrador para continuar: ");
+					System.out.print("Introduce tu id de administrador para continuar: ");
 					String id=sc.nextLine();
 					mibase.abrir();
 					acc=BBDDAdministrador.comprobarId(id,mibase.getConexion());
@@ -130,7 +132,7 @@ public class parque {
 												break;
 											}	
 										}
-										
+
 										if (valida=false){
 											System.out.println("El empleado con código nº "+codigo+" ha sido eliminado.");
 											break;
@@ -142,7 +144,86 @@ public class parque {
 									break;
 								}
 							case 2:
-								
+								mibase.abrir();
+								lista=BBDDAtraccion.listar(at, mibase.getConexion());
+								mibase.cerrar();
+								System.out.println("");
+								System.out.println("Listado de todas las atracciones del parque: ");
+								for (int i = 0; i < lista.size(); i++) {
+									System.out.println(lista.get(i).toString());
+								}
+								System.out.println("");
+								System.out.println("1. Revisar atracción.");
+								System.out.println("2. Cerrar atracción.");
+								System.out.println("0. Salir.");
+								opc=sc.nextInt();
+								switch(opc){
+								case 1:
+									System.out.println("Listado de las atracciones pendientes por revisar: ");
+									for (int i = 0; i < lista.size(); i++) {
+										if(lista.get(i).getFh_revision().equals("noRev")){
+											System.out.println(lista.get(i).toString());
+											aux++;
+										}
+									}
+									if(aux==0)
+										System.out.println("Todas las atracciones están revisadas.");
+									System.out.println("");
+									System.out.print("Introduzca código de atracción a revisar: ");
+									codigoAt=sc.nextInt();
+									sc.nextLine();
+									aux=0;
+									for (int i = 0; i < lista.size(); i++) {
+										if(lista.get(i).getCod_atraccion()==codigoAt)
+											aux1++;
+									}
+									if(aux1==0){
+										System.out.println("No existe ninguna atracción con ese codigo.");
+										break;
+									}
+									else{
+										aux1=0;
+										for (int i = 0; i < lista.size(); i++) {
+											if(lista.get(i).getFh_revision().equals("noRev") && lista.get(i).getCod_atraccion()==codigoAt){
+												aux=i;
+											}
+											if(!lista.get(i).getFh_revision().equals("noRev") && lista.get(i).getCod_atraccion()==codigoAt){
+												aux1=i;
+											}
+										}
+										if(aux1!=0){
+											opc=0;
+											System.out.println("La atracción "+lista.get(aux1).getNom_atraccion()+" fue revisada el: "+lista.get(aux1).getFh_revision());
+											do{
+												System.out.println("¿Desea volver a revisar la atracción?");
+												System.out.println("1.Sí");
+												System.out.println("2.No");
+												opc=sc.nextInt();
+												sc.nextLine();
+											}while(opc!=1 || opc!=2);
+											if(opc==2)
+												break;
+											else{
+												mibase.abrir();
+												BBDDAtraccion.revisar(id, codigoAt, mibase.getConexion());
+												mibase.cerrar();
+												System.out.println("La atracción se ha vuelto a revisar satisfactoriamente");
+												break;
+											}
+
+										}
+										if(aux!=0){
+											System.out.println("Se va a revisar la atracción:_ "+lista.get(aux).getNom_atraccion());
+											mibase.abrir();
+											BBDDAtraccion.revisar(id,codigoAt,mibase.getConexion());
+											mibase.cerrar();
+											System.out.println("Atracción revisada correctamente.");
+										}
+									}
+									break;
+								case 2:
+									break;
+								}
 								break;
 							}
 						}while(opc!=0);

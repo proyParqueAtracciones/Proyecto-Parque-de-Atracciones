@@ -36,6 +36,12 @@ public class atraccion {
 		this.id_administrador = id_administrador;
 	}
 	
+	@Override
+	public String toString() {
+		return "cod_atraccion=" + cod_atraccion + ", nom_atraccion=" + nom_atraccion + ", fh_revision="
+				+ fh_revision + ", id_administrador=" + id_administrador;
+	}
+	
 	
 	
 }
