@@ -3,11 +3,11 @@ package clases;
 public class entrada {
 	private int num_entrada;
 	private String fh_emision;
-	private double precio;
+	private int precio;
 	private String tipo;
 	private int cod_taquillero;
 	private static int cont=1;
-	public entrada(int num_entrada, String fh_emision, double precio, String tipo, int cod_taquillero) {
+	public entrada(int num_entrada, String fh_emision, int precio, String tipo, int cod_taquillero) {
 		this.num_entrada = cont;
 		this.fh_emision = fh_emision;
 		this.precio = precio;
@@ -22,7 +22,7 @@ public class entrada {
 	public String getFh_emision() {
 		return fh_emision;
 	}
-	public double getPrecio() {
+	public int getPrecio() {
 		return precio;
 	}
 	public String getTipo() {

@@ -26,8 +26,17 @@ public class BBDDEntrada {
 	 * código del empleado/taquillero que la ha vendido y lo inserta en la base de datos
 	 */
 	
-	public static void nuevaEntrada(entrada en, Connection c){
-		String cadena="INSERT INTO entrada VALUES('"+en.getNumentrada()+", SYSDATE,"+en.getPrecio()+","+en.getTipo()+","+en.getCod_taquillero()+"')";
+	public static void nuevaEntrada(int codigo,double precio, Connection c){
+		String tipo="";
+		if(precio==0)
+			tipo="Personal";
+		if(precio==10)
+			tipo="Paseo";
+		if(precio==15)
+			tipo="Descuento";
+		if(precio==20)
+			tipo="Normal";
+		String cadena="INSERT INTO entrada (precio,tipo,cod_taquillero) VALUES("+precio+",'"+tipo+"',"+codigo+")";
 		try{
 			s=c.createStatement();
 			s.executeUpdate(cadena);

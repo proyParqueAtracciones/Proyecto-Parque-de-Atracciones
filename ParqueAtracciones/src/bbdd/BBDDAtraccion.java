@@ -30,9 +30,7 @@ public class BBDDAtraccion {
 	}
 
 	public static void revisar (String id, int codAt, Connection c){
-		String ca="TO_CHAR(SYSDATE,'yyyy/mm/dd')";
-		//AQUI ME HE QUEDADO
-		String cadena="UPDATE atracciones SET fh_revision=TO_CHAR(SYDATE), id_administrador='"+id+"' WHERE cod_atraccion="+codAt+"";
+		String cadena="UPDATE atracciones SET  id_administrador='"+id+"' WHERE cod_atraccion="+codAt+"";
 		try{
 			s=c.createStatement();
 			s.executeUpdate(cadena);
