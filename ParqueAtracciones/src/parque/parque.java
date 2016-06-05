@@ -9,10 +9,10 @@ public class parque {
 		Scanner sc=new Scanner(System.in);
 		String nombre="";
 		int codigo=0,codigoAt=0,opc=0,acc=0,a=0, telefono=0,nss=0,aux=0,aux1=0,s=0;
-		String apellidos="",direccion="",categoria="",horario="",dni="";
+		String apellidos="",direccion="",categoria="",horario="",dni="",nombreAt="";
 		boolean valida=false,salir=false;
 
-		Vector <personal> listaTaquilleros;
+		Vector <personal> listaPersonal;
 		Vector <atraccion> lista;
 		/**
 		 * PROBANDO GITHUB
@@ -75,9 +75,23 @@ public class parque {
 								switch(opc){
 								case 1:
 									try{
+										salir=false;
 										System.out.println("Introduce codigo de empleado: ");
 										codigo=sc.nextInt();
 										sc.nextLine();
+										mibase.abrir();
+										listaPersonal=BBDDPersonal.listarPersonal(pe, mibase.getConexion());
+										mibase.cerrar();
+										for (int i = 0; i < listaPersonal.size(); i++) {
+											if(listaPersonal.get(i).getCod_empleado()==codigo){
+												System.out.println("ERROR. El empleado ya existe.");
+												salir=true;
+												break;
+											}
+										}
+										if(salir==true){
+											System.out.println("saliendo.");
+											break;}
 										System.out.println("Introduce nombre de empleado: ");
 										nombre=sc.nextLine();
 										System.out.println("Introduce apellidos: ");
@@ -95,6 +109,7 @@ public class parque {
 										System.out.println("Introduce horario (L ó M ó X etc) :");
 										horario=sc.nextLine();
 									}
+
 									catch(InputMismatchException e){
 										System.err.print(e.getMessage());
 									}
@@ -110,50 +125,48 @@ public class parque {
 									break;
 
 								case 2:
+									salir=false;
 									mibase.abrir();
-									listaTaquilleros=BBDDPersonal.listarTaquilleros(pe,mibase.getConexion());
+									listaPersonal=BBDDPersonal.listarPersonal(pe,mibase.getConexion());
 									mibase.cerrar();
+									System.out.println("");
 									System.out.println("Lista de los empleados que se pueden eliminar: ");
-									for (int i=0;i<listaTaquilleros.size(); i++){
-										System.out.println(listaTaquilleros.get(i).toString());
+									for (int i=0;i<listaPersonal.size(); i++){
+										if(listaPersonal.get(i).getCategoria().equals("Taquillero"))
+											System.out.println(listaPersonal.get(i).toString());
 									}
-									try{
-										System.out.println("");
-										System.out.print("Introduce codigo de empleado: ");
-										codigo=sc.nextInt();
-										sc.nextLine();
-										for (int i = 0; i < listaTaquilleros.size(); i++) {
-											if(listaTaquilleros.get(i).getCod_empleado()==codigo && listaTaquilleros.get(i).getCategoria().equals("Administrador")){
+
+									System.out.println("");
+									System.out.print("Introduce codigo de empleado: ");
+									codigo=sc.nextInt();
+									sc.nextLine();
+
+									for (int i = 0; i < listaPersonal.size(); i++) {
+										if(listaPersonal.get(i).getCod_empleado()==codigo){
+											if(listaPersonal.get(i).getCategoria().equals("Administrador")){
 												System.out.println("No se puede eliminar al empleado ya que es un encargado.");
 												salir=true;
 												break;
 											}
-										}
-										if(salir=false){
-											for (int i = 0; i < listaTaquilleros.size(); i++) {
-												if(listaTaquilleros.get(i).getCod_empleado()==codigo){
-													mibase.abrir();
-													BBDDTaquillero.eliminar(codigo, mibase.getConexion());
-													mibase.cerrar();
-													valida=true;
-													break;
-												}	
-											}
+											mibase.abrir();
+											BBDDTaquillero.eliminar(codigo, mibase.getConexion());
+											mibase.cerrar();
+											System.out.println("El empleado con código nº "+codigo+" ha sido eliminado.");
+											break;
 
-											if (valida=false){
-												System.out.println("El empleado con código nº "+codigo+" ha sido eliminado.");
-												break;
-											}
-											System.out.println("El empleado no existe en la base de datos.");
 										}
-									}catch(InputMismatchException e){
-										System.err.print(e.getMessage());
 									}
+									if (salir==true)
+										break;
+
+									System.out.println("El empleado no existe en la base de datos.");
+
 									break;
 								case 3:
 									System.out.println("OPCION EN DESARROLLO");
 									break;
 								}
+								break;
 							case 2:
 								mibase.abrir();
 								lista=BBDDAtraccion.listar(at, mibase.getConexion());
@@ -233,7 +246,27 @@ public class parque {
 									}
 									break;
 								case 2:
-									System.out.println("OPCION EN DESARROLLO");
+									salir=true;
+									mibase.abrir();
+									lista=BBDDAtraccion.listar(at, mibase.getConexion());
+									mibase.cerrar();
+									System.out.print("Introduzca codigo de la atracción a cerrar: ");
+									codigoAt=sc.nextInt();
+									for (int i = 0; i < lista.size(); i++) {
+										if(lista.get(i).getCod_atraccion()==codigoAt){
+											nombreAt=lista.get(i).getNom_atraccion();
+											salir=false;
+											break;
+										}
+									}
+									if(salir==false){
+										sc.nextLine();
+										mibase.abrir();
+										BBDDAtraccion.cerrar(codigoAt,nombreAt, mibase.getConexion());
+										mibase.cerrar();
+										System.out.println("Atracción "+nombreAt+" cerrada.");
+										break;
+									}
 									break;
 								}
 								break;

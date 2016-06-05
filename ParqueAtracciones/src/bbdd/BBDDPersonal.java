@@ -24,18 +24,18 @@ public class BBDDPersonal {
 		}
 	}
 	
-	public static Vector<personal> listarTaquilleros(personal pe, Connection c){
-		String cadena="SELECT * FROM personal WHERE categoria='Taquillero'";
-		Vector<personal> listaTaquilleros=new Vector<personal>();
+	public static Vector<personal> listarPersonal(personal pe, Connection c){
+		String cadena="SELECT * FROM personal";
+		Vector<personal> listaPersonal=new Vector<personal>();
 		try{
 			s=c.createStatement();
 			reg=s.executeQuery(cadena);
 			while(reg.next()){
 				pe= new personal (reg.getInt("cod_empleado"),reg.getString("nombre"),reg.getString("apellidos"),reg.getString("dni"),reg.getInt("telefono"),reg.getInt("nss"),reg.getString("direccion"),reg.getString("categoria"));
-				listaTaquilleros.add(pe);
+				listaPersonal.add(pe);
 			}
 			s.close();
-			return listaTaquilleros;
+			return listaPersonal;
 				
 		}catch (SQLException e){
 			System.out.println(e.getMessage());

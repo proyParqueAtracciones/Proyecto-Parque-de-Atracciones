@@ -40,7 +40,19 @@ public class BBDDAtraccion {
 			System.out.println(e.getMessage());
 		}
 	}
-
+	
+	public static void cerrar(int codAt,String nomAt, Connection c){
+		nomAt=nomAt+" [CERRADA]";
+		String cadena="UPDATE atracciones SET nom_atraccion='"+nomAt+"' WHERE cod_atraccion="+codAt+"";
+		try{
+			s=c.createStatement();
+			s.executeUpdate(cadena);
+			s.close();
+		}
+		catch ( SQLException e){
+			System.out.println(e.getMessage());
+		}
+	}
 }
 
 
