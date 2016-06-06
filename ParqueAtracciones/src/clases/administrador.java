@@ -1,5 +1,8 @@
 package clases;
 
+import bbdd.BBDDAtraccion;
+import bbdd.BBDDRevisiones;
+import bbdd.BaseDatosC;
 public class administrador extends personal {
 	private String id_administrador;
 
@@ -12,6 +15,11 @@ public class administrador extends personal {
 	public String getId_administrador() {
 		return id_administrador;
 	}
-	
-	
+
+	public static void realizarRevisión(String id, int codigo, String motivo,  BaseDatosC mibase){
+		mibase.abrir();
+		BBDDAtraccion.revisar(id, codigo, mibase.getConexion());
+		BBDDRevisiones.realizarRevision(id, codigo, motivo,mibase.getConexion());
+		mibase.cerrar();
+	}
 }

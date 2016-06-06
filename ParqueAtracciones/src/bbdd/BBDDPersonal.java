@@ -7,7 +7,15 @@ public class BBDDPersonal {
 	private static Connection c;
 	private static ResultSet reg;
 
-	public static int listar (personal pe,int codigo,String nombre, Connection c){
+	/**
+	 * Método que busca un empleado en la BBDD. Recibe cod_emple y el nombre.
+	 * 
+	 * @param codigo Codigo de personal
+	 * @param nombre	Nombre de empleado
+	 * @param c	Conexion a BBDD
+	 * @return	Devuelve 1 en caso de encontrar el empleado o 0 en caso contrario.
+	 */
+	public static int listar (int codigo,String nombre, Connection c){
 		String cadena="SELECT cod_empleado,nombre FROM personal where cod_empleado="+codigo+" AND nombre='"+nombre+"'";
 		try{
 			s=c.createStatement();
@@ -23,7 +31,12 @@ public class BBDDPersonal {
 			return 0;
 		}
 	}
-	
+	/**
+	 * Método que lista al personal del parque. Recibe el objeto personal.
+	 * @param pe	Objeto personal
+	 * @param c	Conexión a BBDD
+	 * @return	Devuelve la lista con los objetos personal que ha recibido de la BBDD en caso de encontrar o null en caso contrario.
+	 */
 	public static Vector<personal> listarPersonal(personal pe, Connection c){
 		String cadena="SELECT * FROM personal";
 		Vector<personal> listaPersonal=new Vector<personal>();
@@ -36,7 +49,7 @@ public class BBDDPersonal {
 			}
 			s.close();
 			return listaPersonal;
-				
+
 		}catch (SQLException e){
 			System.out.println(e.getMessage());
 			return null;

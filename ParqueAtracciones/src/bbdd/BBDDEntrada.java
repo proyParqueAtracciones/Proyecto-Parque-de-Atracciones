@@ -5,28 +5,17 @@ public class BBDDEntrada {
 	private static Statement s;
 	private static Connection c;
 	private static ResultSet reg;
-	
-	/*
-	 * Con este método alteramos la fecha para que aparezca además la hora
+
+
+	/**
+	 * Método que inserta una nueva entrada en la BBDD. El propio método calcula el tipo de entrada. Recibe cod_empleado y precio.
+	 * La fh_emisión se calcula en la bbdd
+	 * @param codigo	Codigo de empleado que vende la entrada
+	 * @param precio	Precio de la entrada
+	 * @param c	Conexion a BBDD
 	 */
-	public static void formato_fecha(entrada en, Connection c){
-		String cadena="ALTER SESSION SET NLS_DATE_FORMAT='DD/MM/YYYY HH24:MI'";
-		try{
-			s=c.createStatement();
-			s.executeQuery(cadena);
-			s.close();
-			}
-			catch ( SQLException e){
-				System.out.println(e.getMessage());
-			}
-	}
-	
-	/*
-	 * Método para vender una entrada, recibe los datos de la entrada, así como el
-	 * código del empleado/taquillero que la ha vendido y lo inserta en la base de datos
-	 */
-	
-	public static void nuevaEntrada(int codigo,double precio, Connection c){
+
+	public static void nuevaEntrada(int codigo,int precio, Connection c){
 		String tipo="";
 		if(precio==0)
 			tipo="Personal";
@@ -41,10 +30,10 @@ public class BBDDEntrada {
 			s=c.createStatement();
 			s.executeUpdate(cadena);
 			s.close();
-			}
-			catch ( SQLException e){
-				System.out.println(e.getMessage());
-			}
+		}
+		catch ( SQLException e){
+			System.out.println(e.getMessage());
+		}
 	}
 }
 

@@ -8,8 +8,15 @@ public class BBDDAdministrador {
 	private static Statement s;
 	private static Connection c;
 	private static ResultSet reg;
-	
-	public static int listar (personal pe,int codigo, Connection c){
+
+
+	/**
+	 * Método que lista los empleados de la tabla administrador con el codigo que recibe
+	 * @param codigo codigo de empleado
+	 * @param c	conexion a la BBDD
+	 * @return	devuelve 1 en caso de encontrar algun empleado o 0 en caso de no encontrarlo
+	 */
+	public static int listar (int codigo, Connection c){
 		String cadena="SELECT cod_empleado FROM administrador where cod_empleado="+codigo+"";
 		try{
 			s=c.createStatement();
@@ -25,22 +32,27 @@ public class BBDDAdministrador {
 			return 0;
 		}
 	}
-	
+	/**
+	 * Método que comprueba el campo id_administrador en la tabla administrador
+	 * @param id	identificador de administrador(unico)
+	 * @param c		Conexion a la BBDD
+	 * @return		Devuelve 1 en caso de encontrar el administrador o 0 en caso contrario.
+	 */
 	public static int comprobarId(String id, Connection c){
-			String cadena="SELECT id_administrador FROM administrador WHERE id_administrador='"+id+"'";
-			try{
-				s=c.createStatement();
-				reg=s.executeQuery(cadena);
-				if (reg.next()){
-					s.close();
-					return 1;
-				}
+		String cadena="SELECT id_administrador FROM administrador WHERE id_administrador='"+id+"'";
+		try{
+			s=c.createStatement();
+			reg=s.executeQuery(cadena);
+			if (reg.next()){
 				s.close();
-				return 0;
+				return 1;
 			}
-			catch (SQLException e){
-				System.out.println(e.getMessage());
-				return 0;
-			}
+			s.close();
+			return 0;
+		}
+		catch (SQLException e){
+			System.out.println(e.getMessage());
+			return 0;
+		}
 	}
 }
